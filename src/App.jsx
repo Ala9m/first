@@ -1,33 +1,67 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState } from 'react';
 import './App.css'
+//import About from './components/About';
+import Navbar from './components/Navbar';
+//import TextForm from './components/TextForm';
+//import Alert from './components/Alert';
+
+/*import {
+  BrowserRouter as Router,
+  Route,
+  Routes
+} from "react-router-dom";*/
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [mode, setMode] = useState('light'); //whether dark mode is enabled or not
+  const [mbtnt, setMbtnt] = useState('Enable Dark Mode');
+  const [alert, setAlert] = useState(null);
 
+  const showAlert = (message, type) =>{
+    setAlert({
+      msg: message,
+      type: type
+    })
+    setTimeout(() => {
+      setAlert(null);
+    }, 2000);
+  }
+
+  const toggleMode = () =>{
+    if(mode === 'light'){
+      setMode('dark');
+      setMbtnt('Enable Light Mode');
+      showAlert("Dark mode has been enabled", "success");
+      document.body.style.backgroundColor = '#443f3f';
+      document.title = 'TextUtils - Darkmode';
+    }else{
+      setMode('light');
+      setMbtnt('Enable Dark Mode');  
+      showAlert("Light mode has been enabled", "success");
+      document.body.style.backgroundColor = 'white';
+      document.title = 'TextUtils - Lightmode';
+    }
+  }
+  
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+{/*<Navbar title="TextUtils" aboutText="About TextUtils"/>*/}
+{/*<Navbar/>*/}
+{/*<Router>*/}
+<Navbar title="TextUtils" mode={mode} mbtnt={mbtnt} toggleMode={toggleMode}/>
+{/*<Alert alert={alert}/>*/}
+
+        {/*<Routes>*/}
+
+          {/*<Route exact path="/about" element={<About />} />*/}
+          
+          {/*<Route exact path="/" element={} />*/}
+
+          {/*<TextForm showAlert={showAlert} heading="Enter the text to analyze" mode={mode} />*/}
+          
+        {/*</Routes>*/}
+
+
+{/*</Router>*/}
     </>
   )
 }
